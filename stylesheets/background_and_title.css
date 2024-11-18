@@ -1,0 +1,86 @@
+img.background {
+	top: 6cm;
+	left: 12cm;
+	opacity: 0.25;
+	position: absolute;
+	z-index: -1;
+}
+
+h1.title {
+	text-align: center;
+	margin: 3cm auto 1cm 6.5cm;
+	font-family: Arial;
+	font-size: 40;
+	width: 25cm;
+	background-color: rgb(173,185,202);
+	padding-top: 25px;
+	padding-bottom: 10px;
+	height: 1.5cm;
+	display: block;
+}
+
+ul.menu {
+	list-style-type: none;
+	background-color: rgb(173,185,202);
+	width: 4cm;
+	margin-left: 6.5cm;
+	margin-top: -1cm;
+}
+ul.menu li a {
+	display: block;
+	font-family: Arial;
+	font-size: 24;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	text-align: center;
+	margin-left: -1cm;
+	text-decoration: none;
+
+}
+ul.menu li a:visited {
+	color: black;
+}
+ul.menu li a:hover {
+	background-color: rgb(132, 151, 176);
+}
+ul.menu li a.logout {
+	margin-top: 3.2cm;
+	color: black;
+}
+
+img.exeter {
+	position: absolute;
+	top: 7.5cm;
+	left: 20.47cm;
+	border: 3px solid black;
+	object-fit: cover;
+	width: 400px;
+	height: 330px;
+}
+img.marker_black {
+	position: absolute;
+	width: 25px;
+	left: 25cm;
+	top: 9.5cm;
+}
+
+h2.page-title {
+	position: absolute;
+	top: 5.3cm;
+	left: 21cm;
+	font-size: 30;
+	font-family: Arial;
+	font-weight: normal;
+}
+hr.underline {
+	margin: -9.4cm auto auto 13cm;
+	width: 18cm;
+	border: none;
+	height: 3px;
+	color: #333;
+	background-color: #333;
+}
+
+ul.menu li a.current {
+	background-color: rgb(132, 151, 176)
+}

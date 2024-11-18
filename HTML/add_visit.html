@@ -1,0 +1,153 @@
+<html>
+	<head>
+		<title>COVID-CT: Add visit</title>
+		<link rel="stylesheet" href="../stylesheets/background_and_title.css">
+		<style>
+			h2.page-title {
+				left: 19cm;
+			}
+			form.add-visit {
+				width: 4.2cm;
+				margin: auto;
+				margin-left: 14.5cm;
+				margin-top: 0.5cm;
+			}
+			form.add-visit input {
+				background-color: transparent;
+				height: 1.2cm;
+				width: 4cm;
+				border: 1px solid black;
+				margin-bottom: 5px;
+			}
+			form.add-visit input::placeholder {
+				text-align: center;
+				color: black;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			input[type="text"] {
+				text-align: center;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			input[type="button"] {
+				color: black;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			form.add-visit input.addbutton {
+				margin-top: 1.7cm;
+				border-radius: 10px;
+				background-color: white;
+			}
+			form.add-visit input.cancelbutton {
+				border-radius: 10px;
+				background-color: white;
+			}
+		</style>
+		<script>
+			function moveMarker(click) {
+				var exeter = document.getElementById("exeter");
+				var relativeX = (click.clientX - exeter.offsetLeft);
+				var relativeY = (click.clientY - exeter.offsetTop);
+				var x = document.getElementById("x");
+				var y = document.getElementById("y");
+				x.setAttribute("value", Math.round(relativeX));
+				y.setAttribute("value", Math.round(relativeY));
+				var marker = document.getElementById("marker");
+				marker.style.top = click.clientY - 23;
+				marker.style.left = click.clientX -10;
+			}
+
+			function add_visit() {
+				var xmlhttp = new XMLHttpRequest();
+				var inputs = "date="+(document.getElementById("date").value)+"&"+"time="+(document.getElementById("time").value)
+				 +"&"+"duration="+(document.getElementById("duration").value)+"&"+"x="+(document.getElementById("x").value)+"&"+
+				 "y="+(document.getElementById("y").value);
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 1) {
+						alert("Visit added succesfully.");
+					}
+        };
+				console.log(inputs);
+				xmlhttp.open("POST", "../php/add_visit.php", true);
+				xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlhttp.send(inputs)
+			}
+			function checkForm() {
+
+				 re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+
+				 var date = document.getElementById("date").value;
+				 var time = document.getElementById("time").value;
+				 var duration = document.getElementById("duration").value;
+				 var x = document.getElementById("x").value;
+				 var y = document.getElementById("y").value;
+
+				 if(date != '' && !date.match(re)) {
+					 alert("Date must be in format dd/mm/yyyy.");
+					 return false;
+				 }
+
+				 re = /^\d{1,2}:\d{2}([ap]m)?$/;
+
+				 if(time != '' && !time.match(re)) {
+					 alert("Time must be in format HH:MM.");
+					 return false;
+				 }
+
+				 if (duration != ' ' && isNaN(duration)) {
+					 alert("Duration must be a number (minutes).");
+					 return false;
+				 }
+
+				 if ((x == null || x == "") || (y == null || y == "")) {
+					 alert("Please select coordinates.");
+					 return false;
+				 }
+
+				 if (date == null || date == "") {
+					 alert("Please enter a date.");
+  		     return false;
+				 }
+
+				 if (time == null || time == "") {
+					 alert("Please enter a time.");
+  		     return false;
+				 }
+
+				 if (duration == null || duration == "") {
+					 alert("Please enter a duration.");
+  		     return false;
+				 }
+				 add_visit();
+			 }
+		</script>
+	</head>
+	<body>
+		<img class="background" src="../img/covid.png" width="550px">
+		<img class="exeter" id="exeter"  src="../img/exeter.jpg">
+		<script>document.getElementById("exeter").addEventListener("mousedown", moveMarker);</script>
+		<img class="marker_black" id="marker" src="../img/marker_black.png">
+		<h1 class="title">COVID-19 Contact Tracing</h1>
+		<ul class="menu">
+			<li><a href="homepage.php">Home</a></li>
+			<li><a href="overview.php">Overview</a></li>
+			<li><a class="current" href="add_visit.html">Add Visit</a></li>
+			<li><a href="report.html">Report</a></li>
+			<li><a href="settings.php">Settings</a></li>
+			<li><a href="../php/logout.php" class="logout">Logout</a></li>
+		</ul>
+		<h2 class="page-title">Add a new visit</h2>
+		<hr class="underline">
+		<form class="add-visit" id="add-visit">
+			<input type="text" name="date" id="date" placeholder="Date" onfocus="this.placeholder=''" onblur="this.placeholder='Date'">
+			<input type="text" name="time" id="time" placeholder="Time" onfocus="this.placeholder=''" onblur="this.placeholder='Time'">
+			<input type="text" name="duration" id="duration" placeholder="Duration" onfocus="this.placeholder=''" onblur="this.placeholder='Duration'">
+			<input class="addbutton" type="button" name="add" value="Add" onclick="checkForm()">
+			<input class="cancelbutton" type="button" name="cancel" value="Cancel">
+			<input name="x" id="x" type="hidden">
+			<input name="y" id="y" type="hidden">
+		</form>
+	</body>
+</html>

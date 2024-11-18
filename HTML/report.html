@@ -1,0 +1,130 @@
+<html>
+	<head>
+		<title>COVID-CT: Report</title>
+		<link rel="stylesheet" href="../stylesheets/background_and_title.css">
+		<style>
+			h2.page-title {
+				left: 19cm;
+			}
+			div.text {
+				font-family: "Times New Roman";
+				font-size: 20;
+				margin-left: 14cm;
+				width:15cm;
+				text-align: center;
+			}
+			form.report {
+				width: 10cm;
+				height: 10cm;
+				margin: auto;
+				margin-left: 16.5cm;
+				margin-top: 1.5cm;
+			}
+			form.report input {
+				background-color: transparent;
+				height: 1.2cm;
+				width: 10cm;
+				border: 1px solid black;
+				margin-bottom: 15px;
+			}
+			form.report input::placeholder {
+				text-align: center;
+				color: black;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			input[type="text"] {
+				text-align: center;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			form.report input.reportbutton {
+				width: 4cm;
+				margin-top: 10px;
+				border-radius: 10px;
+				background-color: white;
+				margin-right: 1.8cm;
+			}
+			input[type="button"] {
+				color: black;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			form.report input.cancelbutton {
+				border: 1px solid black;
+				border-radius: 10px;
+				background-color: white;
+				height: 1.2cm;
+				width: 4cm;
+			}
+		</style>
+		<script>
+			function checkForm() {
+				re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+
+				var date = document.getElementById("date").value;
+				var time = document.getElementById("time").value;
+
+				if(date != '' && !date.match(re)) {
+					alert("Date must be in format dd/mm/yyyy.");
+					return false;
+				}
+
+				re = /^\d{1,2}:\d{2}([ap]m)?$/;
+
+				if(time != '' && !time.match(re)) {
+					alert("Time must be in format HH:MM.");
+					return false;
+				}
+
+				if (date == null || date == "") {
+					alert("Please enter a date.");
+					return false;
+				}
+
+				if (time == null || time == "") {
+					alert("Please enter a time.");
+					return false;
+				}
+				reportInfection();
+			}
+
+			function reportInfection() {
+				var xmlhttp = new XMLHttpRequest();
+				var inputs = "date="+(document.getElementById("date").value)+"&"+"time="+(document.getElementById("time").value)
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 1) {
+						alert("Infection reported succesfully.");
+					}
+        };
+				xmlhttp.open("POST", "../php/report.php", true);
+				xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlhttp.send(inputs)
+				console.log(inputs);
+			}
+		</script>
+	</head>
+	<body>
+		<img class="background" src="../img/covid.png" width="550px">
+		<h1 class="title">COVID-19 Contact Tracing</h1>
+		<ul class="menu">
+			<li><a href="homepage.php">Home</a></li>
+			<li><a href="overview.php">Overview</a></li>
+			<li><a href="add_visit.html">Add Visit</a></li>
+			<li><a class="current">Report</a></li>
+			<li><a href="settings.php">Settings</a></li>
+			<li><a href="../php/logout.php" class="logout">Logout</a></li>
+		</ul>
+		<h2 class="page-title">Report an Infection</h2>
+		<hr class="underline">
+		<div class="text">
+			<p>Please report the date and time when you were tested positive for COVID-19.</p>
+		</div>
+		<form class="report">
+			<input type="text" name="date" id="date" placeholder="Date" onfocus="this.placeholder=''" onblur="this.placeholder='Date'">
+			<input type="text" name="time" id="time" placeholder="Time" onfocus="this.placeholder=''" onblur="this.placeholder='Time'">
+			<input class="reportbutton" type="button" name="report" value="Report" onclick="checkForm()">
+			<input class= "cancelbutton" type="button" name="cancel" value="Cancel">
+		</form>
+	</body>
+</html>

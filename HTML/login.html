@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<title>COVID-CT: Login</title>
+		<link rel="stylesheet" href="../stylesheets/background_and_title.css">
+		<style>
+			div.inputs {
+				width: 10cm;
+				height: 10cm;
+				margin-left: 14.4cm;
+				margin-top: 2cm;
+				overflow: hidden;
+			}
+			div.inputs form input.usernamepassword {
+				background-color: transparent;
+				height: 1.2cm;
+				width: 10cm;
+				border: 1px solid black;
+				margin-bottom: 20px;
+			}
+			input[type="text"] {
+				text-align: center;
+			}
+			input[type="password"] {
+				text-align: center;
+			}
+			div.inputs form input.usernamepassword::placeholder {
+				text-align: center;
+				/* font-family: "Times New Roman" */
+				color: black;
+			}
+			div.inputs form input.login {
+				width: 4.5cm;
+				margin-top: 40px;
+				height: 1.2cm;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 10px;
+			}
+
+			div.inputs form input.cancel {
+				width: 4.5cm;
+				margin-top: -61px;
+				height: 1.2cm;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 10px;
+				float: right;
+			}
+
+			div.inputs form input.register {
+				width: 10cm;
+				margin-top: 20px;
+				height: 1.2cm;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 10px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<img class="background" src="../img/covid.png" width="500px">
+		<h1 class="title">COVID-19 Contact Tracing</h1>
+		<div class="inputs">
+			<form action="../php/login.php" method="post">
+				<input class="usernamepassword" autocomplete="off" type="text" name="username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'">
+				<input class="usernamepassword" autocomplete="off" type="password" name="password" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'">
+				<input class="login" type="submit" name="submit" value="Login">
+			</form>
+			<form action="" method="post">
+				<input class="cancel" type="submit" name="cancel" value="Cancel">
+			</form>
+			<form action="registration.html" method="post">
+				<input class="register" type="submit" name="register" value="Register">
+			</form>
+	</div>
+	</body>
+</html>

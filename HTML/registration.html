@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>COVID-CT: Registration</title>
+		<link rel="stylesheet" href="../stylesheets/background_and_title.css">
+		<style>
+			form.register {
+				width: 10cm;
+				height: 10cm;
+				margin-left: 14.4cm;
+				margin-top: 2cm;
+			}
+			form.register input {
+				background-color: transparent;
+				height: 1.2cm;
+				width: 10cm;
+				border: 1px solid black;
+				margin-bottom: 15px;
+			}
+			form.register input::placeholder {
+				text-align: center;
+				color: black;
+				font-size: 17;
+				font-family: "Times New Roman";
+			}
+			input[type="text"] {
+				text-align: center;
+			}
+			form.register input.registerbutton {
+				margin-top: 20px;
+				border-radius: 10px;
+				background-color: white;
+			}
+			input[type="password"] {
+				text-align: center;
+			}
+		</style>
+		<script>
+			function checkForm() {
+				var name = document.forms["register"]["name"].value;
+				var username = document.forms["register"]["username"].value;
+				var password = document.forms["register"]["password"].value;
+		    if (name == null || name == "") {
+		      alert("First name is required.");
+		      return false;
+    		}
+				if (username == null || username == "") {
+					alert("Username is required.");
+		      return false;
+				}
+				if (password == null || password == "") {
+					alert("Password is required.");
+					return false;
+				}
+				addUser();
+			}
+			function addUser() {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4) {
+					 if (xmlhttp.status == 400) {
+						 	switch(xmlhttp.statusText) {
+								case "Invalid password":
+								 	alert("Password must be 8 characters or longer.")
+									break;
+								case "Username taken":
+									alert("That username is already in use.");
+									break;
+							}
+						}
+						else {
+							window.location.replace("homepage.php");
+						}
+					 }
+					}
+				var inputs = "name="+(document.getElementById("name").value)+"&"+"surname="+(document.getElementById("surname").value)
+				 +"&"+"username="+(document.getElementById("username").value)+"&"+"password="+(document.getElementById("password").value);
+				xmlhttp.open("POST", "../php/register.php", true);
+				console.log(inputs);
+				xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlhttp.send(inputs);
+			}
+		</script>
+	</head>
+	<body>
+		<img class="background" src="../img/covid.png" width="500px">
+		<h1 class="title">COVID-19 Contact Tracing</h1>
+		<form class="register" name="register">
+			<input type="text" id="name" name="name" autocomplete="off" placeholder="Name" onfocus="this.placeholder=''" onblur="this.placeholder='Name'">
+			<input type="text" id="surname" name="surname" autocomplete="off" placeholder="Surname" onfocus="this.placeholder=''" onblur="this.placeholder='Surname'">
+			<input type="text" id="username" name="username" autocomplete="off" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'">
+			<input type="password" id="password" name="password" autocomplete="off" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'">
+			<input class="registerbutton" type="button"  onclick="return checkForm()" name="register" value="Register">
+		</form>
+	</body>
+</html>
